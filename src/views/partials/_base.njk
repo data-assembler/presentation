@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Presentation
+        </title>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta charset="UTF-8">
+        <link href='{{relativePath}}/dist/style/css/main.css' rel='stylesheet'/>
+    </head>
+
+    <body>
+        {% include "./_header.njk" %}
+        <div id="wrapper">
+            {% block content %}Content{% endblock %}
+        </div>
+        {% include "./_footer.njk" %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="{{relativePath}}/dist/scripts/main.js"></script>
+    </body>
+
+</html>

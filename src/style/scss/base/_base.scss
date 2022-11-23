@@ -1,0 +1,171 @@
+// Contains all basic styles of elements.
+// -----------------------------------------------------------------------------
+html {
+    height: 100%;
+    overflow: hidden;
+    -webkit-tap-highlight-color: rgba(201, 224, 253, 0.2);
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+body {
+    font-size: $text--md;
+    line-height: $line-height;
+    font-weight: 400;
+    font-family: $font-base;
+    color: $text-color;
+    direction: $direction;
+    height: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    background-color: $background-color;
+    position: relative;
+}
+
+// Links
+a {
+    color: $color-link;
+    text-decoration: none;
+    word-wrap: break-word;
+
+    &:hover {
+        color: shade($color-link, 15%);
+    }
+}
+
+// Misc
+//––––––––––––––––––––––––––––––––––––––––––––––––––
+hr {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border-width: 0;
+    border-top: 1px solid $grey;
+}
+
+// Lists
+//––––––––––––––––––––––––––––––––––––––––––––––––––
+ul {
+    list-style: circle inside;
+}
+
+ol {
+    list-style: decimal inside;
+    padding-left: 0;
+    margin-top: 0;
+}
+
+ul {
+    padding-left: 0;
+    margin-top: 0;
+
+    ul,
+    ol {
+        margin: 15px 0 15px 25px;
+        font-size: 90%;
+    }
+}
+
+ol {
+
+    ol,
+    ul {
+        margin: 15px 0 15px 25px;
+        font-size: 90%;
+    }
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+dt {
+    font-style: italic;
+}
+
+dd {
+    padding-left: 25px;
+}
+
+// Images/Video
+//––––––––––––––––––––––––––––––––––––––––––––––––––
+img,
+video {
+    display: table;
+    max-width: 100%;
+}
+
+figure {
+    margin: 0 auto;
+    padding-bottom: 30px;
+
+    img {
+        display: table;
+        margin: 0 auto;
+    }
+}
+
+caption,
+figcaption {
+    font-size: $text--sm;
+    font-style: italic;
+    text-align: center;
+}
+
+// Forms
+//––––––––––––––––––––––––––––––––––––––––––––––––––
+textarea {
+    appearance: none;
+}
+
+label,
+legend {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+fieldset {
+    padding: 0;
+    border-width: 0;
+}
+
+input {
+
+    &[type="checkbox"],
+    &[type="radio"] {
+        display: inline;
+        margin: 0;
+    }
+}
+
+label>.label-body {
+    display: inline-block;
+    font-weight: normal;
+    margin-left: 5px;
+}
+
+// Code
+//––––––––––––––––––––––––––––––––––––––––––––––––––
+// Contain overflow in all browsers.
+pre {
+    overflow: auto;
+}
+
+code {
+    border-radius: $global-radius;
+    border: 1px solid $grey--dark;
+    font-size: 90%;
+    margin: 0 5px;
+    padding: 5px 10px;
+    white-space: nowrap;
+}
+
+pre>code {
+    display: block;
+    padding: 15px 20px;
+    white-space: pre;
+}

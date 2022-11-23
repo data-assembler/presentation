@@ -1,0 +1,40 @@
+@charset 'UTF-8';
+
+// 1. Abstracts - Variables, functions, mixins, and placeholders
+@import 'abstracts/variables',
+'abstracts/functions',
+'abstracts/mixins',
+'abstracts/placeholders',
+'abstracts/grid/clearfix',
+'abstracts/grid/breakpoints',
+'abstracts/grid/grid-framework',
+'abstracts/grid/grid';
+
+// 2. Vendors
+@import 'vendors/normalize',
+'vendors/fonts';
+
+// 3. Base files
+@import 'base/base',
+'base/helpers',
+'base/typography',
+'base/spacing',
+'base/print';
+
+// 4. Layout-related sections
+@import 'layout/header',
+'layout/footer',
+'layout/sidebar',
+'layout/grid';
+
+// 5. Components
+@import 'components/wrapper',
+'components/select',
+'components/checkbox';
+
+// 6. Page-specific styles
+
+
+// 7. Themes
+@import 'themes/default',
+'themes/dark';

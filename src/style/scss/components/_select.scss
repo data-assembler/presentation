@@ -1,0 +1,21 @@
+.select {
+    appearance: none;
+    height: 38px;
+    background: none;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    margin: 0;
+    background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAyOSAxNCIgd2lkdGg9IjI5Ij48cGF0aCBmaWxsPSIjZDFkMWQxIiBkPSJNOS40IDMuNmw1IDcgNS4yLTciLz48L3N2Zz4=) center right no-repeat;
+    padding: 5px 25px 5px 20px;
+    &:hover,
+    &:focus {
+        outline: 0;
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAyOSAxNCIgd2lkdGg9IjI5Ij48cGF0aCBmaWxsPSIjM0IzQjNCIiBkPSJNMTkuNiAzLjZIOS40bDUgNyIvPjwvc3ZnPg==);
+    }
+
+    &--full{
+        display: block;
+        width: 100%;
+    }
+}
