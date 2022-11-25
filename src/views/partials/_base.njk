@@ -11,12 +11,10 @@
         <link href='{{relativePath}}/dist/style/main.css' rel='stylesheet'/>
     </head>
 
-    <body class="bg-gray-50">
-        {% include "./_header.njk" %}
-        <div id="wrapper">
+    <body class="bg-gray-50 h-full overflow-hidden">
+        <div id="slider" class="absolute top-0 left-0 right-0">
             {% block content %}Content{% endblock %}
         </div>
-        {% include "./_footer.njk" %}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="{{relativePath}}/dist/scripts/main.js"></script>
     </body>
