@@ -6,3 +6,13 @@
     width: 100%;
     position: relative;
 }
+
+.harrow svg{
+    display: block;
+    width: 100%;
+}
+
+.varrow svg{
+    display: block;
+    height: 100%;
+}

@@ -2,7 +2,12 @@
 module.exports = {
   content: ["./src/**/*.{html,js,njk}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        title: "Open Sans",
+        handwritten: "Caveat"
+      }
+    },
   },
   plugins: [],
 }
