@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "mkdirp ./public/dist/scripts",
-    "compress:images": "imagemin ./src/images/icons/png/* --out-dir=./public/dist/images/icons",
+    "compress:images": "imagemin ./src/images/icons/* --out-dir=./public/dist/images/icons",
     "watch:images": "nodemon -e png -w ./src/images -x \"npm run compress:images\"",
     "build:style": "npx tailwindcss -i ./src/style/main.css -o ./public/dist/style/main.css",
     "watch:style": "npx tailwindcss -i ./src/style/main.css -o ./public/dist/style/main.css --watch",

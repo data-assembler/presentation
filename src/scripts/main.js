@@ -136,6 +136,23 @@ var slideshow = {
     }
 };
 
+function reveal(id) {
+    var currImg = 0,
+        imgElems = $(id).find('img');
+
+    setInterval(function () {
+        var nextImg = (currImg + 1) % imgElems.length;
+        $(imgElems[currImg]).animate({ opacity: 0 }, 200);
+        $(imgElems[nextImg]).animate({ opacity: 1 }, 300, function () {
+            currImg = nextImg;
+        });
+    }, 2000);
+};
+
 $(document).ready(function () {
     slideshow.init('#slider');
+    reveal('#data-is-here');
+    setTimeout(function () {
+        reveal('#data-is-there');
+    }, 1000)
 });
