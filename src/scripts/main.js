@@ -91,6 +91,10 @@ var slideshow = {
     isBusy: false,
     init: function (id) {
         this.slider = $(id);
+        if (document.location.hash) {
+            this.currentSlide = Number(document.location.hash.substring(1));
+            this.moveTo(this.currentSlide);
+        }
         this.refreshSlideHeight();
 
         var self = this;
@@ -114,25 +118,22 @@ var slideshow = {
     refreshSlideHeight: function () {
         this.slider.find('.slide').height($(window).height());
     },
-    moveDown: function () {
-        if (!this.isBusy && this.currentSlide + 1 < this.slider.find('.slide').length) {
+    moveTo: function (toSlide) {
+        if (!this.isBusy && toSlide >= 0 && toSlide < this.slider.find('.slide').length) {
             this.isBusy = true;
             var self = this;
-            this.slider.animate({ top: '-' + ((self.currentSlide + 1) * $(window).height()) + 'px' }, 1000, function () {
-                self.currentSlide++;
+            this.slider.animate({ top: '-' + (toSlide * $(window).height()) + 'px' }, 1000, function () {
+                self.currentSlide = toSlide;
+                document.location.hash = self.currentSlide.toString();
                 self.isBusy = false;
             });
         }
     },
+    moveDown: function () {
+        this.moveTo(this.currentSlide + 1);
+    },
     moveUp: function () {
-        if (!this.isBusy && this.currentSlide - 1 >= 0) {
-            this.isBusy = true;
-            var self = this;
-            this.slider.animate({ top: '-' + ((self.currentSlide - 1) * $(window).height()) + 'px' }, 1000, function () {
-                self.currentSlide--;
-                self.isBusy = false;
-            });
-        }
+        this.moveTo(this.currentSlide - 1);
     }
 };
 

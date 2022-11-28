@@ -693,6 +693,22 @@ video {
   max-width: 600px;
 }
 
+.max-w-\[\] {
+  max-width: ;
+}
+
+.max-w-\[500\] {
+  max-width: 500;
+}
+
+.max-w-\[500px\] {
+  max-width: 500px;
+}
+
+.max-w-\[00px\] {
+  max-width: 00px;
+}
+
 .flex-1 {
   flex: 1 1 0%;
 }
@@ -769,6 +785,14 @@ video {
 
 .justify-items-stretch {
   justify-items: stretch;
+}
+
+.self-center {
+  align-self: center;
+}
+
+.justify-self-center {
+  justify-self: center;
 }
 
 .overflow-hidden {
@@ -877,6 +901,11 @@ video {
 .px-6 {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
+}
+
+.px-8 {
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 
 .pl-1 {
@@ -1101,6 +1130,11 @@ video {
   .md\:py-10 {
     padding-top: 2.5rem;
     padding-bottom: 2.5rem;
+  }
+
+  .md\:px-8 {
+    padding-left: 2rem;
+    padding-right: 2rem;
   }
 
   .md\:text-2xl {
