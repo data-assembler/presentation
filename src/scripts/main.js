@@ -154,5 +154,13 @@ $(document).ready(function () {
     reveal('#data-is-here');
     setTimeout(function () {
         reveal('#data-is-there');
-    }, 1000)
+    }, 1000);
+
+    $('.counter').on('click', function (e) {
+        e.preventDefault();
+        var countElem = $(this).find('.count');
+        if (countElem.length > 0) {
+            countElem.text(Number(countElem.text()) + 1);
+        }
+    });
 });
