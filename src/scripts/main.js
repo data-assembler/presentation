@@ -1,26 +1,4 @@
 'use strict';
-//DETECT MOBILE DEVICES
-var isMobile = {
-    Android: function () {
-        return navigator.userAgent.match(/Android/i);
-    },
-    BlackBerry: function () {
-        return navigator.userAgent.match(/BlackBerry/i);
-    },
-    iOS: function () {
-        return navigator.userAgent.match(/iPhone|iPad|iPod/i);
-    },
-    Opera: function () {
-        return navigator.userAgent.match(/Opera Mini/i);
-    },
-    Windows: function () {
-        return navigator.userAgent.match(/IEMobile/i);
-    },
-    any: function () {
-        return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
-    }
-};
-
 var touchStartEvent = "touchstart mousedown",
     touchStopEvent = "touchend mouseup",
     touchMoveEvent = "touchmove mousemove";
@@ -150,13 +128,7 @@ function reveal(id) {
     }, 2000);
 };
 
-$(document).ready(function () {
-    slideshow.init('#slider');
-    reveal('#data-is-here');
-    setTimeout(function () {
-        reveal('#data-is-there');
-    }, 1000);
-
+function setupCounters() {
     $('.counter').on('click', function (e) {
         e.preventDefault();
         var countElem = $(this).find('.count');
@@ -164,4 +136,130 @@ $(document).ready(function () {
             countElem.text(Number(countElem.text()) + 1);
         }
     });
+}
+
+var reasonExample = {
+    data: {
+        hard: [
+            {
+                text: "The technical barriers are pissing me off.",
+                memoji: {
+                    name: "hard-1.png",
+                    position: "right"
+                }
+            },
+            {
+                text: "It’s too complex. I am scared of making any changes.",
+                memoji: {
+                    name: "hard-2.png",
+                    position: "left"
+                }
+            },
+            {
+                text: "Why is this chart broken (again)?",
+                memoji: {
+                    name: "hard-3.png",
+                    position: "right"
+                }
+            }
+        ],
+        expensive: [
+            {
+                text: "We don’t have budget to hire more people.",
+                memoji: {
+                    name: "expensive-1.png",
+                    position: "left"
+                }
+            }
+        ],
+        slow: [
+            {
+                text: "Integrating all the data sources is a time killer.",
+                memoji: {
+                    name: "slow-1.png",
+                    position: "right"
+                }
+            }
+        ]
+    },
+    currReason: "hard",
+    currExample: 0,
+    init: function (id) {
+        this.containerElem = $(id);
+        this.textElem = this.containerElem.find('span');
+        this.memojiElem = this.containerElem.find('img');
+        this.start();
+    },
+    change: function (reason, example) {
+        if (reason !== this.currReason || example !== this.currExample) {
+            this.lastChange = new Date().getTime();
+            this.currReason = reason;
+            this.currExample = example;
+            this.hide();
+            var self = this;
+            setTimeout(function () {
+                self.render();
+            }, 400);
+            setTimeout(function () {
+                self.show();
+            }, 500);
+        }
+    },
+    hide: function () {
+        this.memojiElem.removeClass('scale-100');
+        this.memojiElem.addClass('scale-0');
+        this.textElem.removeClass('opacity-100');
+        this.textElem.addClass('opacity-0');
+    },
+    show: function () {
+        this.memojiElem.removeClass('scale-0');
+        this.memojiElem.addClass('scale-100');
+        this.textElem.removeClass('opacity-0');
+        this.textElem.addClass('opacity-100');
+    },
+    render: function () {
+        var ex = this.data[this.currReason][this.currExample];
+        if (ex) {
+            if (!this.containerElem.hasClass('reason-example-' + ex.memoji.position)) {
+                if (ex.memoji.position === 'left') {
+                    this.containerElem.removeClass('reason-example-right');
+                } else {
+                    this.containerElem.removeClass('reason-example-left');
+                }
+                this.containerElem.addClass('reason-example-' + ex.memoji.position);
+            }
+            this.textElem.text(ex.text);
+            this.memojiElem.attr('src', '/dist/images/' + ex.memoji.name);
+        }
+    },
+    start: function () {
+        var self = this;
+        setInterval(function () {
+            var examples = self.data[self.currReason];
+            if (examples.length > 1 && (new Date().getTime() - self.lastChange) >= 3000) {
+                self.change(self.currReason, (self.currExample + 1) % examples.length);
+            }
+        }, 5000);
+    }
+};
+
+function handleReasonSelection() {
+    $('.reason').on('click', function (e) {
+        e.preventDefault();
+        $('.reason').removeClass('reason-active');
+        $(this).addClass('reason-active');
+        reasonExample.change($(this).data('key'), 0);
+    });
+}
+
+$(document).ready(function () {
+    slideshow.init('#slider');
+    reveal('#data-is-here');
+    setTimeout(function () {
+        reveal('#data-is-there');
+    }, 1000);
+
+    setupCounters();
+    handleReasonSelection();
+    reasonExample.init('#reason-example');
 });
