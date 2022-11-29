@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body, html{
+    @apply bg-gray-50;
+}
+
 .slide{
     width: 100%;
     position: relative;

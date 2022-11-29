@@ -63,6 +63,58 @@ $.each({
     };
 });
 
+var fullScreen = {
+    init: function () {
+        var self = this;
+        $(document).keydown(function (e) {
+            console.log(e);
+            if (e.which === 70) {
+                self.toggle();
+                return false;
+            }
+        });
+    },
+    cancel: function () {
+        var el = document;
+        var requestMethod = el.cancelFullScreen || el.webkitCancelFullScreen || el.mozCancelFullScreen || el.exitFullscreen || el.webkitExitFullscreen;
+        if (requestMethod) { // cancel full screen.
+            requestMethod.call(el);
+        } else if (typeof window.ActiveXObject !== "undefined") { // Older IE.
+            var wscript = new ActiveXObject("WScript.Shell");
+            if (wscript !== null) {
+                wscript.SendKeys("{F11}");
+            }
+        }
+    },
+    request: function (el) {
+        // Supports most browsers and their versions.
+        var requestMethod = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullscreen;
+
+        if (requestMethod) { // Native full screen.
+            requestMethod.call(el);
+        } else if (typeof window.ActiveXObject !== "undefined") { // Older IE.
+            var wscript = new ActiveXObject("WScript.Shell");
+            if (wscript !== null) {
+                wscript.SendKeys("{F11}");
+            }
+        }
+        return false
+    },
+    toggle: function (el) {
+        if (!el) {
+            el = document.body; // Make the body go full screen.
+        }
+        var isInFullScreen = (document.fullScreenElement && document.fullScreenElement !== null) || (document.mozFullScreen || document.webkitIsFullScreen);
+
+        if (isInFullScreen) {
+            this.cancel();
+        } else {
+            this.request(el);
+        }
+        return false;
+    }
+}
+
 var slideshow = {
     slider: null,
     currentSlide: 0,
@@ -254,6 +306,7 @@ function handleReasonSelection() {
 }
 
 $(document).ready(function () {
+    fullScreen.init();
     slideshow.init('#slider');
     reveal('#data-is-here');
     setTimeout(function () {
