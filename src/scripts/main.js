@@ -67,7 +67,6 @@ var fullScreen = {
     init: function () {
         var self = this;
         $(document).keydown(function (e) {
-            console.log(e);
             if (e.which === 70) {
                 self.toggle();
                 return false;
