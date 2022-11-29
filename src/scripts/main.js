@@ -184,6 +184,7 @@ var reasonExample = {
     },
     currReason: "hard",
     currExample: 0,
+    lastChange: -1,
     init: function (id) {
         this.containerElem = $(id);
         this.textElem = this.containerElem.find('span');
