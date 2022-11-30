@@ -304,6 +304,123 @@ function handleReasonSelection() {
     });
 }
 
+function setupDashboard(){
+      var customersChart = new ApexCharts(document.querySelector("#customers"), {
+        chart: {
+          type: "area",
+          height: '100%',
+          width: '100%',
+          sparkline: {
+            enabled: true
+          }
+        },
+        stroke: {
+          curve: "smooth"
+        },
+        fill: {
+          opacity: 1
+        },
+        series: [
+          {
+            name: "Customers",
+            data: [
+              35,
+              41,
+              60,
+              62,
+              93,
+              102,
+              104,
+              125,
+              130,
+              142,
+              164,
+              191
+            ]
+          }
+        ],
+        labels: [
+            "2022-01-01",
+            "2022-02-01",
+            "2022-03-01",
+            "2022-04-01",
+            "2022-05-01",
+            "2022-06-01",
+            "2022-07-01",
+            "2022-08-01",
+            "2022-09-01",
+            "2022-10-01",
+            "2022-11-01",
+            "2022-12-01"
+        ],
+        yaxis: {
+          min: 0
+        },
+        xaxis: {
+          type: "datetime"
+        },
+        colors: ["#7CC4FA"]
+      });
+      customersChart.render();
+      var customersChart = new ApexCharts(document.querySelector("#sales"), {
+        chart: {
+          type: "bar",
+          height: '100%',
+          width: '100%',
+          sparkline: {
+            enabled: true
+          }
+        },
+        stroke: {
+          curve: "smooth"
+        },
+        fill: {
+          opacity: 1
+        },
+        series: [
+          {
+            name: "Customers",
+            data: [
+              200,
+              152,
+              340,
+              520,
+              456,
+              633,
+              711,
+              842,
+              612,
+              726,
+              824,
+              621
+            ]
+          }
+        ],
+        labels: [
+            "2022-01-01",
+            "2022-02-01",
+            "2022-03-01",
+            "2022-04-01",
+            "2022-05-01",
+            "2022-06-01",
+            "2022-07-01",
+            "2022-08-01",
+            "2022-09-01",
+            "2022-10-01",
+            "2022-11-01",
+            "2022-12-01"
+        ],
+        yaxis: {
+          min: 0
+        },
+        xaxis: {
+          type: "datetime"
+        },
+        colors: ["#9FB3C8"]
+      });
+      customersChart.render();
+}
+
 $(document).ready(function () {
     fullScreen.init();
     slideshow.init('#slider');
@@ -315,4 +432,5 @@ $(document).ready(function () {
     setupCounters();
     handleReasonSelection();
     reasonExample.init('#reason-example');
+    setupDashboard();
 });
