@@ -123,7 +123,6 @@ var slideshow = {
         this.onChangeStart = onChangeStart;
         this.onChangeEnd = onChangeEnd;
         if (document.location.hash) {
-            console.log(Number(document.location.hash.substring(1)))
             this.moveTo(Number(document.location.hash.substring(1)));
         }
         this.refreshSlideHeight();
