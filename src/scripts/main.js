@@ -494,15 +494,23 @@ $(document).ready(function () {
     slideshow.init(
         '#slider',
         function (from, to) {
+            // Widget Slide
+            var widgetSlideIndex = 5;
+            if (from < widgetSlideIndex && to >= widgetSlideIndex) {
 
+            } else if (from >= widgetSlideIndex && to < widgetSlideIndex) {
+
+            }
         },
         function (from, to) {
-            // Slide 3
-            if (from < 2 && to >= 2) {
+            // Reasons Slide
+            var reasonsSlideIndex = 2;
+            if (from < reasonsSlideIndex && to >= reasonsSlideIndex) {
                 reasonExample.init('#reason-example');
             }
-            // Slide 5
-            if (from < 4 && to >= 4) {
+            // Dashboard Slide
+            var dashboardSlideIndex = 4;
+            if (from < dashboardSlideIndex && to >= dashboardSlideIndex) {
                 dashboard.init();
             }
         }
