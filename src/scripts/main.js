@@ -118,11 +118,13 @@ var slideshow = {
     slider: null,
     currentSlide: 0,
     isBusy: false,
-    init: function (id) {
+    init: function (id, onChangeStart, onChangeEnd) {
         this.slider = $(id);
+        this.onChangeStart = onChangeStart;
+        this.onChangeEnd = onChangeEnd;
         if (document.location.hash) {
-            this.currentSlide = Number(document.location.hash.substring(1));
-            this.moveTo(this.currentSlide);
+            console.log(Number(document.location.hash.substring(1)))
+            this.moveTo(Number(document.location.hash.substring(1)));
         }
         this.refreshSlideHeight();
 
@@ -150,8 +152,14 @@ var slideshow = {
     moveTo: function (toSlide) {
         if (!this.isBusy && toSlide >= 0 && toSlide < this.slider.find('.slide').length) {
             this.isBusy = true;
+            if (typeof this.onChangeStart === 'function') {
+                this.onChangeStart(this.currentSlide, toSlide);
+            }
             var self = this;
             this.slider.animate({ top: '-' + (toSlide * $(window).height()) + 'px' }, 1000, function () {
+                if (typeof self.onChangeEnd === 'function') {
+                    self.onChangeEnd(self.currentSlide, toSlide);
+                }
                 self.currentSlide = toSlide;
                 document.location.hash = self.currentSlide.toString();
                 self.isBusy = false;
@@ -190,6 +198,7 @@ function setupCounters() {
 }
 
 var reasonExample = {
+    isInitialized: false,
     data: {
         hard: [
             {
@@ -237,10 +246,13 @@ var reasonExample = {
     currExample: 0,
     lastChange: -1,
     init: function (id) {
-        this.containerElem = $(id);
-        this.textElem = this.containerElem.find('span');
-        this.memojiElem = this.containerElem.find('img');
-        this.start();
+        if (!this.isInitialized) {
+            this.isInitialized = true;
+            this.containerElem = $(id);
+            this.textElem = this.containerElem.find('span');
+            this.memojiElem = this.containerElem.find('img');
+            this.start();
+        }
     },
     change: function (reason, example) {
         if (reason !== this.currReason || example !== this.currExample) {
@@ -304,168 +316,198 @@ function handleReasonSelection() {
     });
 }
 
-function setupDashboard() {
-    var customersChart = new ApexCharts(document.querySelector("#customers"), {
-        chart: {
-            type: "area",
-            height: '100%',
-            width: '100%',
-            sparkline: {
-                enabled: true
-            }
-        },
-        stroke: {
-            curve: "smooth"
-        },
-        fill: {
-            opacity: 1
-        },
-        series: [
-            {
-                name: "Customers",
-                data: [
-                    35,
-                    41,
-                    60,
-                    62,
-                    93,
-                    102,
-                    104,
-                    125,
-                    130,
-                    142,
-                    164,
-                    191
-                ]
-            }
-        ],
-        labels: [
-            "2022-01-01",
-            "2022-02-01",
-            "2022-03-01",
-            "2022-04-01",
-            "2022-05-01",
-            "2022-06-01",
-            "2022-07-01",
-            "2022-08-01",
-            "2022-09-01",
-            "2022-10-01",
-            "2022-11-01",
-            "2022-12-01"
-        ],
-        yaxis: {
-            min: 0
-        },
-        xaxis: {
-            type: "datetime"
-        },
-        colors: ["#7CC4FA"]
-    });
-    customersChart.render();
-    var customersChart = new ApexCharts(document.querySelector("#sales"), {
-        chart: {
-            type: "bar",
-            height: '100%',
-            width: '100%',
-            sparkline: {
-                enabled: true
-            }
-        },
-        stroke: {
-            curve: "smooth"
-        },
-        fill: {
-            opacity: 1
-        },
-        series: [
-            {
-                name: "Customers",
-                data: [
-                    200,
-                    152,
-                    340,
-                    520,
-                    456,
-                    633,
-                    711,
-                    842,
-                    612,
-                    726,
-                    824,
-                    621
-                ]
-            }
-        ],
-        labels: [
-            "2022-01-01",
-            "2022-02-01",
-            "2022-03-01",
-            "2022-04-01",
-            "2022-05-01",
-            "2022-06-01",
-            "2022-07-01",
-            "2022-08-01",
-            "2022-09-01",
-            "2022-10-01",
-            "2022-11-01",
-            "2022-12-01"
-        ],
-        yaxis: {
-            min: 0
-        },
-        xaxis: {
-            type: "datetime"
-        },
-        colors: ["#9FB3C8"]
-    });
-    customersChart.render();
-    var visitsAndSignupsChart = new ApexCharts(document.querySelector("#signups"), {
-        series: [{
-            name: 'Visits',
-            data: [310, 401, 366, 435, 578, 402, 604, 724, 679, 783, 901, 855]
-        }],
-        chart: {
-            height: '100%',
-            width: '100%',
-            type: 'line',
-            toolbar: {
-                show: false
-            },
-            zoom: {
-                enabled: false
-            }
-        },
-        stroke: {
-            width: 4,
-            curve: 'smooth'
-        },
-        xaxis: {
-            type: 'category',
-            categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul","Aug", "Sep", "Oct", "Nov", "Dec"],
-        },
-        fill: {
-            type: 'gradient',
-            gradient: {
-                shade: 'dark',
-                gradientToColors: ['#FDD835'],
-                shadeIntensity: 1,
-                type: 'horizontal',
-                opacityFrom: 1,
-                opacityTo: 1,
-                stops: [0, 100, 100, 100]
-            },
-        },
-        yaxis: {
-            min: 0,
-            tickAmount: 6
+var dashboard = {
+    isInitialized: false,
+    init: function () {
+        if (!this.isInitialized) {
+            this.isInitialized = true;
+            this.initCustomersSales("#customers");
+            this.initSalesChart("#sales");
+            this.initSignupsChart("#signups");
         }
-    });
-    visitsAndSignupsChart.render();
+    },
+    initCustomersSales: function (id) {
+        var customersChart = new ApexCharts(document.querySelector(id), {
+            chart: {
+                type: "area",
+                height: '100%',
+                width: '100%',
+                sparkline: {
+                    enabled: true
+                }
+            },
+            stroke: {
+                curve: "smooth"
+            },
+            fill: {
+                opacity: 1
+            },
+            series: [
+                {
+                    name: "Customers",
+                    data: [
+                        35,
+                        41,
+                        60,
+                        62,
+                        93,
+                        102,
+                        104,
+                        125,
+                        130,
+                        142,
+                        164,
+                        191
+                    ]
+                }
+            ],
+            labels: [
+                "2022-01-01",
+                "2022-02-01",
+                "2022-03-01",
+                "2022-04-01",
+                "2022-05-01",
+                "2022-06-01",
+                "2022-07-01",
+                "2022-08-01",
+                "2022-09-01",
+                "2022-10-01",
+                "2022-11-01",
+                "2022-12-01"
+            ],
+            yaxis: {
+                min: 0
+            },
+            xaxis: {
+                type: "datetime"
+            },
+            colors: ["#7CC4FA"]
+        });
+        customersChart.render();
+    },
+    initSalesChart: function (id) {
+        var salesChart = new ApexCharts(document.querySelector(id), {
+            chart: {
+                type: "bar",
+                height: '100%',
+                width: '100%',
+                sparkline: {
+                    enabled: true
+                }
+            },
+            stroke: {
+                curve: "smooth"
+            },
+            fill: {
+                opacity: 1
+            },
+            series: [
+                {
+                    name: "Customers",
+                    data: [
+                        200,
+                        152,
+                        340,
+                        520,
+                        456,
+                        633,
+                        711,
+                        842,
+                        612,
+                        726,
+                        824,
+                        621
+                    ]
+                }
+            ],
+            labels: [
+                "2022-01-01",
+                "2022-02-01",
+                "2022-03-01",
+                "2022-04-01",
+                "2022-05-01",
+                "2022-06-01",
+                "2022-07-01",
+                "2022-08-01",
+                "2022-09-01",
+                "2022-10-01",
+                "2022-11-01",
+                "2022-12-01"
+            ],
+            yaxis: {
+                min: 0
+            },
+            xaxis: {
+                type: "datetime"
+            },
+            colors: ["#9FB3C8"]
+        });
+        salesChart.render();
+    },
+    initSignupsChart: function (id) {
+        var visitsAndSignupsChart = new ApexCharts(document.querySelector(id), {
+            series: [{
+                name: 'Visits',
+                data: [310, 401, 366, 435, 578, 402, 604, 724, 679, 783, 901, 855]
+            }],
+            chart: {
+                height: '100%',
+                width: '100%',
+                type: 'line',
+                toolbar: {
+                    show: false
+                },
+                zoom: {
+                    enabled: false
+                }
+            },
+            stroke: {
+                width: 4,
+                curve: 'smooth'
+            },
+            xaxis: {
+                type: 'category',
+                categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            },
+            fill: {
+                type: 'gradient',
+                gradient: {
+                    shade: 'dark',
+                    gradientToColors: ['#FDD835'],
+                    shadeIntensity: 1,
+                    type: 'horizontal',
+                    opacityFrom: 1,
+                    opacityTo: 1,
+                    stops: [0, 100, 100, 100]
+                },
+            },
+            yaxis: {
+                min: 0,
+                tickAmount: 6
+            }
+        });
+        visitsAndSignupsChart.render();
+    }
 }
 
 $(document).ready(function () {
     fullScreen.init();
-    slideshow.init('#slider');
+    slideshow.init(
+        '#slider',
+        function (from, to) {
+
+        },
+        function (from, to) {
+            // Slide 3
+            if (from < 2 && to >= 2) {
+                reasonExample.init('#reason-example');
+            }
+            // Slide 5
+            if (from < 4 && to >= 4) {
+                dashboard.init();
+            }
+        }
+    );
     reveal('#data-is-here');
     setTimeout(function () {
         reveal('#data-is-there');
@@ -473,6 +515,4 @@ $(document).ready(function () {
 
     setupCounters();
     handleReasonSelection();
-    reasonExample.init('#reason-example');
-    setupDashboard();
 });
