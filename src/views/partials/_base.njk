@@ -15,6 +15,7 @@
         <div id="slider" class="absolute top-0 left-0 right-0">
             {% block content %}Content{% endblock %}
         </div>
+        {% include "./_loading.njk" %}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
         <script src="{{relativePath}}/dist/scripts/main.js"></script>

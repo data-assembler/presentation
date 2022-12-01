@@ -1,4 +1,5 @@
 'use strict';
+
 var touchStartEvent = "touchstart mousedown",
     touchStopEvent = "touchend mouseup",
     touchMoveEvent = "touchmove mousemove";
@@ -118,14 +119,18 @@ var slideshow = {
     slider: null,
     currentSlide: 0,
     isBusy: false,
-    init: function (id, onChangeStart, onChangeEnd) {
+    init: function (id, onReady, onChangeStart, onChangeEnd) {
         this.slider = $(id);
+        this.onReady = onReady;
+        this.refreshSlideHeight();
+
         this.onChangeStart = onChangeStart;
         this.onChangeEnd = onChangeEnd;
         if (document.location.hash) {
-            this.moveTo(Number(document.location.hash.substring(1)));
+            this.moveTo(Number(document.location.hash.substring(1)), null, this.onReady);
+        } else if (typeof this.onReady === 'function') {
+            this.onReady();
         }
-        this.refreshSlideHeight();
 
         var self = this;
         $(document).keydown(function (e) {
@@ -148,14 +153,20 @@ var slideshow = {
     refreshSlideHeight: function () {
         this.slider.find('.slide').height($(window).height());
     },
-    moveTo: function (toSlide) {
+    moveTo: function (toSlide, onChangeStart, onChangeEnd) {
         if (!this.isBusy && toSlide >= 0 && toSlide < this.slider.find('.slide').length) {
             this.isBusy = true;
+            if (typeof onChangeStart === 'function') {
+                onChangeStart(this.currentSlide, toSlide);
+            }
             if (typeof this.onChangeStart === 'function') {
                 this.onChangeStart(this.currentSlide, toSlide);
             }
             var self = this;
             this.slider.animate({ top: '-' + (toSlide * $(window).height()) + 'px' }, 1000, function () {
+                if (typeof onChangeEnd === 'function') {
+                    onChangeEnd(self.currentSlide, toSlide);
+                }
                 if (typeof self.onChangeEnd === 'function') {
                     self.onChangeEnd(self.currentSlide, toSlide);
                 }
@@ -490,16 +501,54 @@ var dashboard = {
 }
 
 $(document).ready(function () {
+    //Reset scroll top
+    history.scrollRestoration = "manual";
+    $(window).on('beforeunload', function () {
+        $('#loading').show();
+        $(window).scrollTop(0);
+    });
+
     fullScreen.init();
     slideshow.init(
         '#slider',
+        function () {
+            reveal('#data-is-here');
+            setTimeout(function () {
+                reveal('#data-is-there');
+            }, 1000);
+
+            setupCounters();
+            handleReasonSelection();
+
+            $('#loading').fadeOut();
+        },
         function (from, to) {
             // Widget Slide
-            var widgetSlideIndex = 5;
-            if (from < widgetSlideIndex && to >= widgetSlideIndex) {
+            var widgetSlideIndex = 5,
+                widgetElem = $('#widget'),
+                widgetContainerElem = $('#widget-container');
 
-            } else if (from >= widgetSlideIndex && to < widgetSlideIndex) {
-
+            if (widgetElem.length > 0 && widgetContainerElem.length > 0) {
+                if (from < widgetSlideIndex && to >= widgetSlideIndex) {
+                    widgetContainerElem.height(widgetElem.height());
+                    widgetElem.data('orig-position', widgetElem.position().top);
+                    widgetElem.css({
+                        height: widgetElem.height() + 'px',
+                        width: widgetElem.width() + 'px',
+                        position: 'absolute'
+                    });
+                    console.log(widgetElem.parent('.slide'));
+                    widgetElem.animate({ top: ($(window).height() + widgetContainerElem.position().top) + 'px' }, 800);
+                } else if (from >= widgetSlideIndex && to < widgetSlideIndex) {
+                    widgetElem.animate({ top: widgetElem.data('orig-position') + 'px' }, 800, function () {
+                        widgetElem.css({
+                            height: 'auto',
+                            width: '100%',
+                            top: 'auto',
+                            position: 'relative'
+                        });
+                    });
+                }
             }
         },
         function (from, to) {
@@ -515,11 +564,4 @@ $(document).ready(function () {
             }
         }
     );
-    reveal('#data-is-here');
-    setTimeout(function () {
-        reveal('#data-is-there');
-    }, 1000);
-
-    setupCounters();
-    handleReasonSelection();
 });
