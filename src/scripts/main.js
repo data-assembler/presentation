@@ -304,40 +304,40 @@ function handleReasonSelection() {
     });
 }
 
-function setupDashboard(){
-      var customersChart = new ApexCharts(document.querySelector("#customers"), {
+function setupDashboard() {
+    var customersChart = new ApexCharts(document.querySelector("#customers"), {
         chart: {
-          type: "area",
-          height: '100%',
-          width: '100%',
-          sparkline: {
-            enabled: true
-          }
+            type: "area",
+            height: '100%',
+            width: '100%',
+            sparkline: {
+                enabled: true
+            }
         },
         stroke: {
-          curve: "smooth"
+            curve: "smooth"
         },
         fill: {
-          opacity: 1
+            opacity: 1
         },
         series: [
-          {
-            name: "Customers",
-            data: [
-              35,
-              41,
-              60,
-              62,
-              93,
-              102,
-              104,
-              125,
-              130,
-              142,
-              164,
-              191
-            ]
-          }
+            {
+                name: "Customers",
+                data: [
+                    35,
+                    41,
+                    60,
+                    62,
+                    93,
+                    102,
+                    104,
+                    125,
+                    130,
+                    142,
+                    164,
+                    191
+                ]
+            }
         ],
         labels: [
             "2022-01-01",
@@ -354,47 +354,47 @@ function setupDashboard(){
             "2022-12-01"
         ],
         yaxis: {
-          min: 0
+            min: 0
         },
         xaxis: {
-          type: "datetime"
+            type: "datetime"
         },
         colors: ["#7CC4FA"]
-      });
-      customersChart.render();
-      var customersChart = new ApexCharts(document.querySelector("#sales"), {
+    });
+    customersChart.render();
+    var customersChart = new ApexCharts(document.querySelector("#sales"), {
         chart: {
-          type: "bar",
-          height: '100%',
-          width: '100%',
-          sparkline: {
-            enabled: true
-          }
+            type: "bar",
+            height: '100%',
+            width: '100%',
+            sparkline: {
+                enabled: true
+            }
         },
         stroke: {
-          curve: "smooth"
+            curve: "smooth"
         },
         fill: {
-          opacity: 1
+            opacity: 1
         },
         series: [
-          {
-            name: "Customers",
-            data: [
-              200,
-              152,
-              340,
-              520,
-              456,
-              633,
-              711,
-              842,
-              612,
-              726,
-              824,
-              621
-            ]
-          }
+            {
+                name: "Customers",
+                data: [
+                    200,
+                    152,
+                    340,
+                    520,
+                    456,
+                    633,
+                    711,
+                    842,
+                    612,
+                    726,
+                    824,
+                    621
+                ]
+            }
         ],
         labels: [
             "2022-01-01",
@@ -411,14 +411,56 @@ function setupDashboard(){
             "2022-12-01"
         ],
         yaxis: {
-          min: 0
+            min: 0
         },
         xaxis: {
-          type: "datetime"
+            type: "datetime"
         },
         colors: ["#9FB3C8"]
-      });
-      customersChart.render();
+    });
+    customersChart.render();
+    var visitsAndSignupsChart = new ApexCharts(document.querySelector("#signups"), {
+        series: [{
+            name: 'Visits',
+            data: [310, 401, 366, 435, 578, 402, 604, 724, 679, 783, 901, 855]
+        }],
+        chart: {
+            height: '100%',
+            width: '100%',
+            type: 'line',
+            toolbar: {
+                show: false
+            },
+            zoom: {
+                enabled: false
+            }
+        },
+        stroke: {
+            width: 4,
+            curve: 'smooth'
+        },
+        xaxis: {
+            type: 'category',
+            categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul","Aug", "Sep", "Oct", "Nov", "Dec"],
+        },
+        fill: {
+            type: 'gradient',
+            gradient: {
+                shade: 'dark',
+                gradientToColors: ['#FDD835'],
+                shadeIntensity: 1,
+                type: 'horizontal',
+                opacityFrom: 1,
+                opacityTo: 1,
+                stops: [0, 100, 100, 100]
+            },
+        },
+        yaxis: {
+            min: 0,
+            tickAmount: 6
+        }
+    });
+    visitsAndSignupsChart.render();
 }
 
 $(document).ready(function () {

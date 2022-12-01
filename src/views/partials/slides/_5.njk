@@ -9,20 +9,31 @@
             <div class="flex-none flex flex-row flex-nowrap w-full mb-2 lg:mb-3">
                 <div class="bg-white relative rounded-md border-2 shadow-sm flex-1 h-[80px] max-h-[80px] flex flex-col mr-2 lg:mr-3">
                     <h3 class="flex-none font-semibold whitespace-nowrap text-ellipsis text-gray-500 text-xs pt-1 px-1">Customers</h3>
-                    <h2 class="font-bold px-1 font-title">191</h2>
+                    <div class="flex-none flex pb-1 px-1 min-h-0 items-center">
+                        <h2 class="font-bold flex-1 min-h-0 font-title">191</h2>
+                        <span class="flex-none min-h-0 py-0.5 inline-block rounded-md px-1 font-semibold text-xs bg-green-100 text-green-600 fill-current">16.6%</span>
+                    </div>
                     <div class="w-full flex-1 min-h-0">
                         <div id="customers" class="w-full h-full"></div>
                     </div>
                 </div>
                 <div class="bg-white relative rounded-md border-2 shadow-sm flex-1 h-[80px] max-h-[80px] flex flex-col">
                     <h3 class="flex-none font-semibold whitespace-nowrap text-ellipsis text-gray-500 text-xs pt-1 px-1">Sales</h3>
-                    <h2 class="font-bold px-1 font-title">$621</h2>
+                    <div class="flex-none flex pb-1 px-1 min-h-0 items-center">
+                        <h2 class="font-bold flex-1 min-h-0 font-title">$621</h2>
+                        <span class="flex-none min-h-0 py-0.5 inline-block rounded-md px-1 font-semibold text-xs bg-red-100 text-red-600 fill-current">24.6%</span>
+                    </div>
                     <div class="w-full flex-1 min-h-0">
                         <div id="sales" class="w-full h-full"></div>
                     </div>
                 </div>
             </div>
-            <div class="bg-white min-h-0 rounded-md border-2 shadow-sm w-full flex-1 max-h-[240px]"></div>
+            <div class="bg-white min-h-0 rounded-md border-2 shadow-sm w-full flex-1 max-h-[240px] flex flex-col">
+                <h3 class="flex-none font-semibold whitespace-nowrap text-ellipsis text-gray-500 text-sm pt-2 px-2">Monthly Signups</h3>
+                <div class="w-full flex-1 min-h-0">
+                    <div id="signups" class="w-full h-full"></div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
