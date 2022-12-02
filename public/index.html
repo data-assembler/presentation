@@ -133,7 +133,7 @@
                     </div>
                 </div>
             </div>
-            <div id="widget" class="bg-white min-h-0 rounded-md border-2 shadow-sm w-full flex-1 max-h-[240px] flex flex-col">
+            <div id="widget" class="bg-white relative min-h-0 rounded-md border-2 shadow-sm w-full flex-1 max-h-[240px] flex flex-col">
                 <h3 class="flex-none font-semibold whitespace-nowrap text-ellipsis text-gray-500 text-sm pt-2 px-2">Monthly Signups</h3>
                 <div class="w-full flex-1 min-h-0">
                     <div id="signups" class="w-full h-full"></div>
@@ -148,7 +148,27 @@
             <h1 class="lg:text-5xl text-3xl font-extrabold font-title">Turning tabular data into insights with no effort</h1>
             <p class="text-lg lg:text-xl max-w-[500px] mt-3">A widget is a visual representation of the tabular data to which it is connected. Every widget is connected to a workflow and uses its output as a data source. There are different types of widgets that help users make sense of their data, and quickly spot the trends &amp; outliers.</p>
         </div>
-        <div id="widget-container" class="max-h-[240px] flex-1 flex flex-col justify-center items-center lg:pr-6 min-h-0 max-w-[600px] w-full lg:w-auto"></div>
+        <div id="widget-container" class="max-h-[240px] relative flex-none lg:flex-1 flex flex-col justify-center items-center lg:pr-6 min-h-0 max-w-[600px] w-full lg:w-auto">
+            <div id="widget-workflow-tunnel" class="bg-gray-100 border-l-2 border-r-2 h-0 absolute top-[100%] left-[50%] -translate-x-[50%] w-[12px] lg:w-[15px]"></div>
+        </div>
+    </div>
+</div><div class="slide">
+    <div class="absolute top-[50%] z-10 -translate-y-[50%] left-[50%] -translate-x-[50%] w-full h-full py-6 px-6 lg:px-0 lg:max-w-[70%] flex flex-col flex-nowrap lg:flex-row min-h-0 items-center justify-center">
+        <div id="workflow" class="p-2 border-2 rounded-md shadow-sm bg-white flex-none md:flex-1 flex justify-center items-center mb-6 lg:mb-0 lg:mr-6 min-h-0 max-w-[600px] w-full lg:w-auto">
+            <div class="flex-none w-[50px] h-[50px] md:w-[60px] md:h-[60px] rounded-md border-2 border-purple-200 bg-purple-50 relative">
+                <div class="fill-current text-purple-400 w-[28px] md:w-[35px] absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 503.7 512"><circle cx="87.7" cy="87.7" r="87.7"/><path d="M154.8,337.1H21.6A21,21,0,0,0,.5,358V491.4a21,21,0,0,0,20.9,21.1H154.8a21,21,0,0,0,21.1-20.9V358.2a21.1,21.1,0,0,0-21.1-21.1Z" transform="translate(-0.5 -0.5)"/><path d="M501.6,161.4,430.1,18.3a10,10,0,0,0-17.8,0L340.7,161.4a10,10,0,0,0,8.9,14.4H492.7a9.89,9.89,0,0,0,8.9-14.4Z" transform="translate(-0.5 -0.5)"/><path d="M322.5,85.3a8,8,0,0,0-1.8-2.7l-31.3-31a7.71,7.71,0,1,0-11.06,10.74,3.19,3.19,0,0,0,.26.26l18,17.8H211.7a7.7,7.7,0,1,0,0,15.4h84.8l-18,17.8A7.71,7.71,0,0,0,289,124.86l.26-.26s31.4-31,31.4-31.1A7.57,7.57,0,0,0,322.5,85.3Z" transform="translate(-0.5 -0.5)"/><path d="M124.7,243.7a7.92,7.92,0,0,0,.1-10.9L93.7,201.4a7.48,7.48,0,0,0-3.9-2.1c-.1,0-.1,0-.3-.1a7.65,7.65,0,0,0-4.2.5,6.73,6.73,0,0,0-2.6,1.8l-31,31.3a7.71,7.71,0,0,0,11,10.8l17.8-18v84.8a7.7,7.7,0,0,0,15.4,0V225.6l17.8,18a7.76,7.76,0,0,0,11,.13Z" transform="translate(-0.5 -0.5)"/><path d="M384.7,269.3a7.73,7.73,0,0,0-.1,10.9l31,31.3a7.73,7.73,0,0,0,10.93.07l.07-.07s31-31.3,31-31.4a7.73,7.73,0,0,0-.1-10.9,7.64,7.64,0,0,0-10.8,0l-.1.1-17.8,18V202.5a7.7,7.7,0,0,0-15.4,0v84.8l-17.8-18A7.73,7.73,0,0,0,384.7,269.3Z" transform="translate(-0.5 -0.5)"/><path d="M445.6,346.3H396.7a24,24,0,0,0-17,7l-34.6,34.6a24,24,0,0,0-7,17v48.9a24,24,0,0,0,7,17l34.6,34.7a24,24,0,0,0,17,7h48.9a24,24,0,0,0,17-7l34.6-34.6a24,24,0,0,0,7-17V405a24,24,0,0,0-7-17l-34.6-34.6A23.65,23.65,0,0,0,445.6,346.3Z" transform="translate(-0.5 -0.5)"/></svg></div>
+            </div>
+            <div class="flex-1 px-2 md:px-3">
+                <h2 class="font-semibold text-sm md:text-md text-ellipsis">Fetch monthly signups</h2>
+                <p class="text-gray-500 text-sm md:text-md">1 hour ago</p>
+            </div>
+            <button class="block w-[35px] h-[35px] md:w-[45px] md:h-[45px] appearance-none hover:text-purple-400 active:text-purple-600 text-purple-500 fill-current rounded-full bg-transparent"><svg xmlns="http://www.w3.org/2000/svg" class="start" viewBox="0 0 436.8 436.8"><path d="M218.4,0C97.78,0,0,97.78,0,218.4S97.78,436.8,218.4,436.8,436.8,339,436.8,218.4,339,0,218.4,0ZM158.9,111.82A26.2,26.2,0,0,1,172,115.14l140,81a25.41,25.41,0,0,1,0,44.1l-140,81.2c-17.39,9.43-37.18-2.59-37.62-22.4V137.37c.33-14.86,11.55-25.26,24.5-25.55Z"/></svg><svg xmlns="http://www.w3.org/2000/svg" class="stop" viewBox="0 0 459.2 459.2"><path d="M229.6,459.2A229.6,229.6,0,1,0,0,229.6,229.2,229.2,0,0,0,229.6,459.2Zm-89-293.44A25.69,25.69,0,0,1,166.32,140H294a25.7,25.7,0,0,1,25.77,25.76V293.44A25.69,25.69,0,0,1,294,319.2H165.76A25.69,25.69,0,0,1,140,293.44Z"/></svg></button>
+        </div>
+        <div class="flex-none lg:flex-1 mb-4 lg:mb-0">
+            <h3 class="text-sm lg:text-md bg-white border-2 border-purple-300 shadow-sm rounded-xl py-1 px-3 uppercase font-bold text-purple-500 mb-0.5 lg:mb-1 inline-block">Workflow</h3>
+            <h1 class="lg:text-5xl text-3xl font-extrabold font-title">Build data automations with no code</h1>
+            <p class="text-lg lg:text-xl max-w-[500px] mt-3">A workflow is a scenario automating one or more tasks. It is a sequence of steps that run linearly and connect data wherever it lives.</p>
+        </div>
     </div>
 </div>        </div>
 <div id="loading" class="fixed z-50 top-0 left-0 right-0 bottom-0 w-full h-full bg-gray-50">

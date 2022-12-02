@@ -56,3 +56,19 @@ body, html{
 .reason-example-left img{
     @apply left-[-20px] lg:left-[-40px];
 }
+
+#workflow button .start{
+    display: block;
+}
+
+#workflow button .stop{
+    display: none;
+}
+
+#workflow button.running .start{
+    display: none;
+}
+
+#workflow button.running .stop{
+    display: block;
+}

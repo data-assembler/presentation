@@ -122,7 +122,7 @@ var slideshow = {
     init: function (id, onReady, onChangeStart, onChangeEnd) {
         this.slider = $(id);
         this.onReady = onReady;
-        this.refreshSlideHeight();
+        this.setSlideHeight();
 
         this.onChangeStart = onChangeStart;
         this.onChangeEnd = onChangeEnd;
@@ -147,10 +147,10 @@ var slideshow = {
         $(document).on('swipeup', function () { self.moveDown(); });
 
         $(window).on('resize', function () {
-            self.refreshSlideHeight();
+            document.location.reload();
         });
     },
-    refreshSlideHeight: function () {
+    setSlideHeight: function () {
         this.slider.find('.slide').height($(window).height());
     },
     moveTo: function (toSlide, onChangeStart, onChangeEnd) {
@@ -520,15 +520,24 @@ $(document).ready(function () {
             setupCounters();
             handleReasonSelection();
 
+            $('#workflow button').on('click', function (e) {
+                e.preventDefault();
+                if (!$(this).hasClass('running')){
+                    
+                }
+                $(this).toggleClass('running');
+            });
+
             $('#loading').fadeOut();
         },
         function (from, to) {
             // Widget Slide
             var widgetSlideIndex = 5,
                 widgetElem = $('#widget'),
-                widgetContainerElem = $('#widget-container');
+                widgetContainerElem = $('#widget-container'),
+                widgetWorkflowTunnelElem = $('#widget-workflow-tunnel');
 
-            if (widgetElem.length > 0 && widgetContainerElem.length > 0) {
+            if (widgetElem.length > 0 && widgetContainerElem.length > 0 && widgetWorkflowTunnelElem.length > 0) {
                 if (from < widgetSlideIndex && to >= widgetSlideIndex) {
                     widgetContainerElem.height(widgetElem.height());
                     widgetElem.data('orig-position', widgetElem.position().top);
@@ -537,9 +546,9 @@ $(document).ready(function () {
                         width: widgetElem.width() + 'px',
                         position: 'absolute'
                     });
-                    console.log(widgetElem.parent('.slide'));
                     widgetElem.animate({ top: ($(window).height() + widgetContainerElem.position().top) + 'px' }, 800);
                 } else if (from >= widgetSlideIndex && to < widgetSlideIndex) {
+                    widgetWorkflowTunnelElem.css({ height: 0 });
                     widgetElem.animate({ top: widgetElem.data('orig-position') + 'px' }, 800, function () {
                         widgetElem.css({
                             height: 'auto',
@@ -548,6 +557,18 @@ $(document).ready(function () {
                             position: 'relative'
                         });
                     });
+                }
+            }
+
+            // Workflow Slide
+            var workflowSlideIndex = 6,
+                workflowElem = $('#workflow');
+            if (workflowElem.length > 0 && widgetContainerElem.length > 0 && widgetWorkflowTunnelElem.length > 0) {
+                if (from < workflowSlideIndex && to >= workflowSlideIndex) {
+                    if (widgetWorkflowTunnelElem.height() <= 0) {
+                        var tunnelHeight = workflowElem.offset().top - (widgetContainerElem.offset().top + widgetContainerElem.height());
+                        widgetWorkflowTunnelElem.animate({ height: tunnelHeight + 'px' }, 800);
+                    }
                 }
             }
         },
