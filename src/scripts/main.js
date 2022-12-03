@@ -522,10 +522,17 @@ $(document).ready(function () {
 
             $('#workflow button').on('click', function (e) {
                 e.preventDefault();
-                if (!$(this).hasClass('running')){
-                    
+                if (!$(this).hasClass('running')) {
+                    $(this).addClass('running');
+                    var widgetWorkflowTunnelElem = $('#widget-workflow-tunnel'),
+                        self = this,
+                        dataElem = $('<div class="absolute bottom-[-20px] left-[50%] -translate-x-[50%] w-[20px] h-[20px] rounded-full bg-purple-500"></div>');
+                    widgetWorkflowTunnelElem.append(dataElem);
+                    dataElem.animate({ bottom: '120%' }, 800, function () {
+                        dataElem.remove();
+                        $(self).removeClass('running');
+                    })
                 }
-                $(this).toggleClass('running');
             });
 
             $('#loading').fadeOut();
