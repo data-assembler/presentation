@@ -64,6 +64,50 @@ $.each({
     };
 });
 
+function timeSince(unixTimestamp) {
+    const msPerMinute = 60 * 1000;
+    const msPerHour = msPerMinute * 60;
+    const msPerDay = msPerHour * 24;
+
+    const now = new Date();
+    const elapsed = now.getTime() - (unixTimestamp * 1000);
+
+    if (elapsed < msPerMinute) {
+        if (Math.round(elapsed / 1000) === 0) {
+            return 'Now';
+        }
+        return Math.round(elapsed / 1000) + ' seconds ago';
+    }
+
+    else if (elapsed < msPerHour) {
+        return Math.round(elapsed / msPerMinute) + ' minutes ago';
+    }
+
+    else if (elapsed < msPerDay) {
+        return Math.round(elapsed / msPerHour) + ' hours ago';
+    }
+    return formatDate(unixTimestamp);
+}
+
+function formatDate(unixTimestamp) {
+    var date = new Date(unixTimestamp * 1000);
+
+    const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][date.getMonth()];
+    var hour = date.getHours();
+    var min = date.getMinutes();
+    var sec = date.getSeconds();
+
+    hour = (hour < 10 ? "0" : "") + hour;
+    min = (min < 10 ? "0" : "") + min;
+    sec = (sec < 10 ? "0" : "") + sec;
+
+    return date.getDate() + " " + month + " " + date.getFullYear() + " " + hour + ":" + min + ":" + sec;
+}
+
+function formatTime(unixtimestamp) {
+    return unixtimestamp ? timeSince(unixtimestamp) : '';
+}
+
 var fullScreen = {
     init: function () {
         var self = this;
@@ -500,6 +544,43 @@ var dashboard = {
     }
 }
 
+var workflow = {
+    init: function (id) {
+        this.containerElem = $(id);
+        this.runTimeElem = this.containerElem.find('.run-time');
+        this.runBtnElem = this.containerElem.find('.run-btn');
+        this.refreshRunTime((new Date().getTime() / 1000) - 3600);
+        this.watchRunTime();
+        this.handleRun();
+    },
+    handleRun: function () {
+        var self = this;
+        this.runBtnElem.on('click', function (e) {
+            e.preventDefault();
+            if (!self.runBtnElem.hasClass('running')) {
+                self.runBtnElem.addClass('running');
+                self.refreshRunTime(new Date().getTime() / 1000);
+                var widgetWorkflowTunnelElem = $('#widget-workflow-tunnel'),
+                    dataElem = $('<div class="absolute bottom-[-20px] left-[50%] -translate-x-[50%] w-[20px] h-[20px] rounded-full bg-purple-500"></div>');
+                widgetWorkflowTunnelElem.append(dataElem);
+                dataElem.animate({ bottom: '120%' }, 800, function () {
+                    dataElem.remove();
+                    self.runBtnElem.removeClass('running');
+                })
+            }
+        });
+    },
+    refreshRunTime: function (lastRunTime) {
+        this.lastRunTime = lastRunTime;
+        this.runTimeElem.text(formatTime(lastRunTime));
+    },
+    watchRunTime: function () {
+        var self = this;
+        setInterval(function () {
+            self.refreshRunTime(self.lastRunTime);
+        }, 10000)
+    }
+}
 $(document).ready(function () {
     //Reset scroll top
     history.scrollRestoration = "manual";
@@ -520,20 +601,7 @@ $(document).ready(function () {
             setupCounters();
             handleReasonSelection();
 
-            $('#workflow button').on('click', function (e) {
-                e.preventDefault();
-                if (!$(this).hasClass('running')) {
-                    $(this).addClass('running');
-                    var widgetWorkflowTunnelElem = $('#widget-workflow-tunnel'),
-                        self = this,
-                        dataElem = $('<div class="absolute bottom-[-20px] left-[50%] -translate-x-[50%] w-[20px] h-[20px] rounded-full bg-purple-500"></div>');
-                    widgetWorkflowTunnelElem.append(dataElem);
-                    dataElem.animate({ bottom: '120%' }, 800, function () {
-                        dataElem.remove();
-                        $(self).removeClass('running');
-                    })
-                }
-            });
+            workflow.init('#workflow');
 
             $('#loading').fadeOut();
         },
