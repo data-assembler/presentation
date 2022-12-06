@@ -734,6 +734,14 @@ video {
   height: 6px;
 }
 
+.h-\[4px\] {
+  height: 4px;
+}
+
+.h-\[3px\] {
+  height: 3px;
+}
+
 .max-h-\[65\%\] {
   max-height: 65%;
 }
@@ -1494,6 +1502,14 @@ body, html {
 
   .md\:h-\[45px\] {
     height: 45px;
+  }
+
+  .md\:h-\[\] {
+    height: ;
+  }
+
+  .md\:h-\[6px\] {
+    height: 6px;
   }
 
   .md\:w-\[80\%\] {
