@@ -14,6 +14,7 @@
     <body class="h-full overflow-hidden">
         <div id="slider" class="absolute top-0 left-0 right-0">
             {% block content %}Content{% endblock %}
+            {% include "./_progress.njk" %}
         </div>
         {% include "./_loading.njk" %}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

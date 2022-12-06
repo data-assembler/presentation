@@ -165,6 +165,7 @@ var slideshow = {
     isBusy: false,
     init: function (id, onReady, onChangeStart, onChangeEnd) {
         this.slider = $(id);
+        this.progressElem = this.slider.find('#progress');
         this.onReady = onReady;
         this.setSlideHeight();
 
@@ -206,6 +207,7 @@ var slideshow = {
             if (typeof this.onChangeStart === 'function') {
                 this.onChangeStart(this.currentSlide, toSlide);
             }
+            this.updateProgress(toSlide);
             var self = this;
             this.slider.animate({ top: '-' + (toSlide * $(window).height()) + 'px' }, 1000, function () {
                 if (typeof onChangeEnd === 'function') {
@@ -225,6 +227,9 @@ var slideshow = {
     },
     moveUp: function () {
         this.moveTo(this.currentSlide - 1);
+    },
+    updateProgress: function (currSlide) {
+        this.progressElem.animate({ width: ( currSlide === 0? 0 : (((currSlide + 1) / this.slider.find('.slide').length) * 100)) + '%' }, 800);
     }
 };
 
