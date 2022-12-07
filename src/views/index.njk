@@ -1,11 +1,42 @@
-{% extends "./partials/_base.njk" %}
-{% set relativePath = "." %}
-{% block content %}
-   {% include "./partials/slides/_1.njk" %}
-   {% include "./partials/slides/_2.njk" %}
-   {% include "./partials/slides/_3.njk" %}
-   {% include "./partials/slides/_4.njk" %}
-   {% include "./partials/slides/_5.njk" %}
-   {% include "./partials/slides/_6.njk" %}
-   {% include "./partials/slides/_7.njk" %}
-{% endblock content %}
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>
+            Presentation
+        </title>
+      <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+      <meta charset="UTF-8">
+   </head>
+   <style>
+      *,
+      *::after,
+      *::before {
+         box-sizing: border-box;
+      }
+
+      #iframe,
+      body,
+      html {
+         width: 100%;
+         height: 100%;
+         overflow: hidden;
+         border: none;
+         padding: 0;
+         margin: 0;
+      }
+   </style>
+   <body>
+      <iframe id="iframe" src="/frame.html" scrolling="no"></iframe>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+      <script>
+         var iframe = $('#iframe');
+         iframe[0].focus();
+         iframe.on('blur', function () {
+            iframe[0].focus();
+         });
+         iframe.attr('src', '/frame.html' + document.location.hash);
+      </script>
+   </body>
+
+</html>
