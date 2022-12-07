@@ -341,7 +341,7 @@ var reasonExample = {
                 if (self.memojiElem.hasClass('loaded')) {
                     self.show();
                 } else {
-                    self.memojiElem.on('load', self.show);
+                    self.memojiElem.on('load', self.show.apply(self));
                 }
             }, 500);
         }
@@ -371,7 +371,7 @@ var reasonExample = {
             }
             this.textElem.text(ex.text);
             this.memojiElem.removeClass('loaded');
-            this.memojiElem.off('load', this.show);
+            this.memojiElem.off('load', this.show.apply(this));
             this.memojiElem.attr('src', '/dist/images/' + ex.memoji.name);
         }
     },
