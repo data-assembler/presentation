@@ -319,11 +319,7 @@ var reasonExample = {
             this.containerElem = $(id);
             this.textElem = this.containerElem.find('span');
             this.memojiElem = this.containerElem.find('img');
-            var self = this;
-            this.memojiElem.on('load', function () {
-                console.log('loaded');
-                self.memojiElem.addClass('loaded');
-            })
+
             this.start();
         }
     },
@@ -341,7 +337,9 @@ var reasonExample = {
                 if (self.memojiElem.hasClass('loaded')) {
                     self.show();
                 } else {
-                    self.memojiElem.on('load', self.show.apply(self));
+                    self.memojiElem.on('load', function () {
+                        self.show();
+                    });
                 }
             }, 500);
         }
@@ -371,7 +369,12 @@ var reasonExample = {
             }
             this.textElem.text(ex.text);
             this.memojiElem.removeClass('loaded');
-            this.memojiElem.off('load', this.show.apply(this));
+            this.memojiElem.off('load');
+            var self = this;
+            this.memojiElem.on('load', function () {
+                console.log('loaded');
+                self.memojiElem.addClass('loaded');
+            })
             this.memojiElem.attr('src', '/dist/images/' + ex.memoji.name);
         }
     },
