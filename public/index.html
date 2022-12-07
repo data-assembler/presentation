@@ -27,7 +27,7 @@
       }
    </style>
    <body>
-      <iframe id="iframe" src="/frame.html" scrolling="no"></iframe>
+      <iframe id="iframe" scrolling="no"></iframe>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
       <script>
          var iframe = $('#iframe');
@@ -35,7 +35,7 @@
          iframe.on('blur', function () {
             iframe[0].focus();
          });
-         iframe.attr('src', '/frame.html' + document.location.hash);
+         iframe.attr('src', '/presentation.html' + document.location.hash);
       </script>
    </body>
 
