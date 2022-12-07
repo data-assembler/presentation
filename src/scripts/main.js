@@ -224,6 +224,9 @@ var slideshow = {
                 }
                 self.currSlide = toSlide;
                 document.location.hash = self.currSlide.toString();
+                if(window.parent){
+                    window.parent.location.hash = self.currSlide.toString();
+                }
                 self.isBusy = false;
             });
         }
@@ -372,7 +375,6 @@ var reasonExample = {
             this.memojiElem.off('load');
             var self = this;
             this.memojiElem.on('load', function () {
-                console.log('loaded');
                 self.memojiElem.addClass('loaded');
             })
             this.memojiElem.attr('src', '/dist/images/' + ex.memoji.name);
