@@ -287,7 +287,7 @@ var reasonExample = {
                 }
             },
             {
-                text: "Why is this chart broken (again)?",
+                text: "Why is this chart broken again?",
                 memoji: {
                     name: "hard-3.png",
                     position: "right"
