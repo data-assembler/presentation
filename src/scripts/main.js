@@ -273,7 +273,7 @@ var reasonExample = {
     data: {
         hard: [
             {
-                text: "The technical barriers are pissing me off.",
+                text: "The technical barriers are so frustrating.",
                 memoji: {
                     name: "hard-1.png",
                     position: "right"
@@ -296,7 +296,7 @@ var reasonExample = {
         ],
         expensive: [
             {
-                text: "We don’t have budget to hire more people.",
+                text: "We don’t have the budget to hire more people.",
                 memoji: {
                     name: "expensive-1.png",
                     position: "left"
