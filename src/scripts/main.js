@@ -314,7 +314,7 @@ var reasonExample = {
         ]
     },
     currReason: "hard",
-    currExample: 0,
+    currExample: 0, 
     lastChange: -1,
     init: function (id) {
         if (!this.isInitialized) {
